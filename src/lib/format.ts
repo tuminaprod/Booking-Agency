@@ -1,44 +1,13 @@
-import type { CurrencyCode, ISODate } from "@/lib/models";
+import type { ISODate } from "@/lib/models";
 import { parseISODate } from "@/lib/dates";
 
-/** Indicative display rates from USD. Charges are always settled in USD. */
-export const CURRENCIES: { code: CurrencyCode; label: string; symbol: string; rate: number }[] = [
-  { code: "USD", label: "US dollar", symbol: "$", rate: 1 },
-  { code: "EUR", label: "Euro", symbol: "€", rate: 0.92 },
-  { code: "GBP", label: "British pound", symbol: "£", rate: 0.79 },
-  { code: "CHF", label: "Swiss franc", symbol: "CHF", rate: 0.88 },
-  { code: "AED", label: "UAE dirham", symbol: "AED", rate: 3.67 },
-  { code: "JPY", label: "Japanese yen", symbol: "¥", rate: 149 },
-];
+export { formatMoney } from "@/lib/money";
 
 export const LANGUAGES = [
   { code: "en", label: "English", available: true },
   { code: "fr", label: "Français", available: false },
-  { code: "de", label: "Deutsch", available: false },
-  { code: "es", label: "Español", available: false },
-  { code: "it", label: "Italiano", available: false },
-  { code: "ja", label: "日本語", available: false },
+  { code: "ar", label: "العربية", available: false },
 ] as const;
-
-const formatters = new Map<string, Intl.NumberFormat>();
-
-export function formatMoney(usd: number, currency: CurrencyCode = "USD", opts: { cents?: boolean } = {}): string {
-  const meta = CURRENCIES.find((c) => c.code === currency) ?? CURRENCIES[0];
-  const value = usd * meta.rate;
-  const cents = opts.cents && currency !== "JPY";
-  const key = `${currency}:${cents}`;
-  let f = formatters.get(key);
-  if (!f) {
-    f = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency,
-      minimumFractionDigits: cents ? 2 : 0,
-      maximumFractionDigits: cents ? 2 : 0,
-    });
-    formatters.set(key, f);
-  }
-  return f.format(value);
-}
 
 const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
 const dateShortFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
