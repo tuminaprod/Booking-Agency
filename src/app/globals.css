@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Oriel design tokens
+   Deep navy + antique gold on warm ivory. Serif display, sans UI.
+   All colours below pass WCAG AA for their intended pairings:
+   ink/ivory 15.9:1 · muted/ivory 6.1:1 · gold/white 4.9:1 · white/navy 13.4:1
+   ========================================================================== */
+
+@theme {
+  --color-ink: #0f1b2d;
+  --color-ink-soft: #2a3547;
+  --color-muted: #566070;
+  --color-subtle: #7a8190;
+
+  --color-navy: #1b2a4a;
+  --color-navy-700: #22345a;
+  --color-navy-600: #2c4270;
+  --color-navy-tint: #e9edf5;
+
+  --color-gold: #a16207;
+  --color-gold-600: #8a5406;
+  --color-gold-soft: #c8a15a;
+  --color-gold-tint: #f7f0e1;
+
+  --color-ivory: #faf8f4;
+  --color-sand: #f3efe7;
+  --color-sand-deep: #e9e3d7;
+  --color-surface: #ffffff;
+  --color-line: #e5dfd4;
+  --color-line-strong: #cfc6b6;
+
+  --color-success: #1d6b45;
+  --color-success-tint: #e6f2ea;
+  --color-danger: #b42318;
+  --color-danger-tint: #fdecea;
+  --color-warning: #93470a;
+  --color-warning-tint: #fdf1e1;
+  --color-info: #1f4fa3;
+  --color-info-tint: #e8eef9;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, "Times New Roman", serif;
+
+  --radius-xs: 3px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+
+  --shadow-soft: 0 1px 2px rgb(15 27 45 / 0.05), 0 1px 1px rgb(15 27 45 / 0.03);
+  --shadow-card: 0 1px 2px rgb(15 27 45 / 0.04), 0 6px 20px -8px rgb(15 27 45 / 0.12);
+  --shadow-raised: 0 2px 6px rgb(15 27 45 / 0.06), 0 18px 44px -16px rgb(15 27 45 / 0.24);
+  --shadow-overlay: 0 24px 64px -20px rgb(15 27 45 / 0.35);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-soft: cubic-bezier(0.55, 0, 1, 0.45);
+
+  --animate-fade-in: fade-in 200ms var(--ease-out-soft) both;
+  --animate-rise-in: rise-in 260ms var(--ease-out-soft) both;
+  --animate-slide-in-right: slide-in-right 280ms var(--ease-out-soft) both;
+  --animate-slide-in-left: slide-in-left 280ms var(--ease-out-soft) both;
+  --animate-slide-up: slide-up 280ms var(--ease-out-soft) both;
+  --animate-shimmer: shimmer 1.4s linear infinite;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slide-in-right {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes slide-in-left {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+  }
+  @keyframes slide-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  @keyframes shimmer {
+    from { background-position: -400px 0; }
+    to { background-position: 400px 0; }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 88px;
+  }
+  body {
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  ::selection {
+    background: var(--color-gold-tint);
+    color: var(--color-ink);
+  }
+  button, [role="button"], a, label[for], summary, select {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+  dialog { color: inherit; }
+  dialog::backdrop {
+    background: rgb(15 27 45 / 0.55);
+    animation: fade-in 200ms var(--ease-out-soft);
+  }
+}
+
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 1320px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  @media (min-width: 640px) {
+    .container-page { padding-inline: 24px; }
+  }
+  @media (min-width: 1024px) {
+    .container-page { padding-inline: 32px; }
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, var(--color-sand) 0px, #fbf9f5 120px, var(--color-sand) 240px);
+    background-size: 800px 100%;
+    animation: var(--animate-shimmer);
+    border-radius: var(--radius-sm);
+  }
+
+  .prose-oriel p { margin-block: 0 1rem; color: var(--color-ink-soft); font-size: 1.0625rem; line-height: 1.75; }
+  .prose-oriel ul { margin: 0 0 1.25rem; padding-left: 1.25rem; list-style: disc; color: var(--color-ink-soft); }
+  .prose-oriel li { margin-bottom: 0.4rem; line-height: 1.65; }
+  .prose-oriel li::marker { color: var(--color-gold); }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  .pb-safe { padding-bottom: max(env(safe-area-inset-bottom), 0px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  header[data-site-header], footer[data-site-footer], nav[data-mobile-nav], [data-no-print] { display: none !important; }
+  body { background: #fff; }
+}
